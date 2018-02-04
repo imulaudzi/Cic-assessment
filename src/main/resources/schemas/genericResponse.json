@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "properties": {
+    "responseCode": {
+      "type": "long"
+    },
+    "reason": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cicList": [
+    {
+      "cicType": "abc",
+      "cicTimeStamp": "abcd",
+      "sourceSystem": "HR",
+      "body": "blah blah"
+    }
+  ],
+  "emailAddress": "imulaudzi@gmail.com"
+}

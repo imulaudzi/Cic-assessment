@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "properties": {
+    "responseCode": {
+      "type": "long"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "emailAddress": {
+      "type": "string"
+    },
+    "cicId": {
+      "type": "long"
+    },
+    "cicType": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "sourceSystem": {
+      "type": "string"
+    },
+    "cicTimeStamp": {
+      "type": "string"
+    }
+  }
+}

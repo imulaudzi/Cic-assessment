@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "properties": {
+    "emailAddress": {
+      "type": "string"
+    },
+    "cicType": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "sourceSystem": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
