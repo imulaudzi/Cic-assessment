@@ -1,0 +1,116 @@
+{
+	"variables": [],
+	"info": {
+		"name": "EOH Cic Assessment",
+		"_postman_id": "23490fe7-83c1-7fb8-470b-2baefa027e43",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cic",
+			"description": "",
+			"item": [
+				{
+					"name": "getListOfCicByEmailAddress",
+					"request": {
+						"url": {
+							"raw": "http://localhost:8080/cic/email?emailAddress=imulaudzi@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cic",
+								"email"
+							],
+							"query": [
+								{
+									"key": "emailAddress",
+									"value": "imulaudzi@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "createCic",
+					"request": {
+						"url": "http://localhost:8080/cic",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"emailAddress\": \"imulaudzi@gmail.com\",\n  \"subject\": \"Hello\",\n  \"body\": \"Hello World\",\n  \"cicType\": \"Email\",\n  \"sourceSystem\": \"Java\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "getCicById",
+					"request": {
+						"url": "http://localhost:8080/cic/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entity",
+			"description": "",
+			"item": [
+				{
+					"name": "getAllEntities",
+					"request": {
+						"url": "http://localhost:8080/entity/listEntities",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "createEntity",
+					"request": {
+						"url": "http://localhost:8080/entity/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"emailAddress\": \"imulaudzi@gmail.com\",\n  \"entityName\": \"Isaac Mulaudzi\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

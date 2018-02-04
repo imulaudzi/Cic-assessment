@@ -21,5 +21,5 @@ public class Cic {
     private String sourceSystem;
     private LocalDateTime cicTimeStamp;
     @ManyToOne
-    CicEntity entity;
+    private CicEntity entity;
 }

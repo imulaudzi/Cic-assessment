@@ -20,11 +20,17 @@ import java.util.List;
 @Service
 public class CicServiceImpl implements CicService {
 
+    private EmailValidator emailValidator;
     @Autowired
     private CicRepository cicRepository;
     @Autowired
     private CicEntityRepository cicEntityRepository;
-    private EmailValidator emailValidator;
+
+    private final static String ENTITY_NOT_FOUND = "Entity Not Found. Email address does not exist";
+    private final static String EMAIL_DOES_NOT_EXIST = "Entity Not Found. Email address [{}] does not exist";
+    private final static String EMAIL_ADDRESS_INVALID = "Email address is invalid";
+    private final static String CIC_NOT_FOUND = "Cic Not Found. Cic ID does not exist";
+    private final static String CIC_NOT_FOUND_FOR_EMAIL_ADDRESS ="No cic found for this email address";
 
     @Override
     public GenericResponse createCic(CicRequest cicRequest) {
@@ -48,13 +54,13 @@ public class CicServiceImpl implements CicService {
             } else {
 
                 genericResponse.setResponseCode("999");
-                genericResponse.setReason("Entity Not Found. Email address does not exist");
-                log.warn("Entity Not Found. Email address [{}] does not exist", cicRequest.getEmailAddress());
+                genericResponse.setReason(ENTITY_NOT_FOUND);
+                log.warn(EMAIL_DOES_NOT_EXIST, cicRequest.getEmailAddress());
             }
         } else {
 
             genericResponse.setResponseCode("998");
-            genericResponse.setReason("Email address is invalid");
+            genericResponse.setReason(EMAIL_ADDRESS_INVALID);
             log.error("Email address [{}] is invalid", cicRequest.getEmailAddress());
         }
         return genericResponse;
@@ -75,7 +81,7 @@ public class CicServiceImpl implements CicService {
             cicResponse.setCicTimeStamp(cic.getCicTimeStamp().toString());
         } else {
             cicResponse.setResponseCode("995");
-            cicResponse.setReason("Cic Not Found. Cic ID does not exist");
+            cicResponse.setReason(CIC_NOT_FOUND);
             log.warn("Cic Not Found. Cic ID [{}] does not exist", cicId);
         }
         return cicResponse;
@@ -91,32 +97,37 @@ public class CicServiceImpl implements CicService {
             if (cicEntity != null) {
                 List<Cic> cicListFromDB = cicRepository.findByEntityId(cicEntity);
 
-                List<CicObject> cicListObj = new ArrayList<>();
+                if (cicListFromDB.size() > 0) {
+                    List<CicObject> cicListObj = new ArrayList<>();
 
-                for (Cic cic : cicListFromDB) {
-                    CicObject aCicObj = new CicObject();
-
-                    aCicObj.setCicId(cic.getCicId());
-                    aCicObj.setCicType(cic.getCicType());
-                    aCicObj.setSubject(cic.getSubject());
-                    aCicObj.setBody(cic.getBody());
-                    aCicObj.setSourceSystem(cic.getSourceSystem());
-                    aCicObj.setCicTimeStamp(cic.getCicTimeStamp().toString());
-                    cicListObj.add(aCicObj);
+                    for (Cic cic : cicListFromDB) {
+                        CicObject aCicObj = new CicObject();
+                        aCicObj.setCicId(cic.getCicId());
+                        aCicObj.setCicType(cic.getCicType());
+                        aCicObj.setSubject(cic.getSubject());
+                        aCicObj.setBody(cic.getBody());
+                        aCicObj.setSourceSystem(cic.getSourceSystem());
+                        aCicObj.setCicTimeStamp(cic.getCicTimeStamp().toString());
+                        cicListObj.add(aCicObj);
+                    }
+                    cicResponse.setCicObject(cicListObj);
+                }else {
+                    cicResponse.setResponseCode("994");
+                    cicResponse.setReason(CIC_NOT_FOUND_FOR_EMAIL_ADDRESS);
                 }
-                cicResponse.setEmailAddress(cicListFromDB.get(0).getEntity().getEmailAddress());
-                cicResponse.setCicObject(cicListObj);
+                cicResponse.setEmailAddress(emailAddress);
+
 
             } else {
 
                 cicResponse.setResponseCode("999");
-                cicResponse.setReason("Entity Not Found. Email address does not exist");
-                log.warn("Entity Not Found. Email address [{}] does not exist", emailAddress);
+                cicResponse.setReason(ENTITY_NOT_FOUND);
+                log.warn(EMAIL_DOES_NOT_EXIST, emailAddress);
             }
         } else {
 
             cicResponse.setResponseCode("998");
-            cicResponse.setReason("Email address is invalid");
+            cicResponse.setReason(EMAIL_ADDRESS_INVALID);
             log.error("Email address [{}] is invalid", emailAddress);
         }
 
